@@ -1,30 +1,18 @@
 <install>
-	<name>ofxNetwork</name>
+	<name>ofxGoogleTTS</name>
 	<version>0.01</version>
-	<author>christian nagelhofer, theo watson</author>
+	<author>osamu shigeta</author>
 	<url></url>
-	<requires>ofxThread</requires>
-	
 	<add>
-		
 		<!-- 	=====================================================================	-->
 		<!--	========================== add per project using this addon =========	-->
 		<!-- 	=====================================================================	-->
-
 		<src>
-			<folder name="addons/ofxNetwork/src">
+			<folder name="addons/ofxGoogleTTS/src">
 				<file>../../../addons/ofxGoogleTTS/src/ofxGoogleTTS.h</file>
 				<file>../../../addons/ofxGoogleTTS/src/ofxGoogleTTS.cpp</file>
 			</folder>
 		</src>
-
-		<include>
-			<path>../../../..\..\..\libs\poco\include</path>
-		</include>
-
-		<link>
-		</link>
-	
 	</add>
 	
 </install>
