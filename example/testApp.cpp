@@ -24,8 +24,7 @@ void testApp::draw(){
 		"0: get ofSoundPlayer \n"
 		"+: up volume \n"
 		"-: down volume \n",
-		15,15
-		);
+		15,15);
 }
 
 //--------------------------------------------------------------
@@ -54,7 +53,7 @@ void testApp::keyPressed(int key){
 		mTTS.speak("The Weather Channel and weather.com provide a national and local weather forecast for cities.");
 		break;
 	case '8':
-		mTTS.speak("Since it is hot today,Å@I'm sure the beer after work will taste wonderful.");
+		mTTS.speak("Since it is hot today, I'm sure the beer after work will taste wonderful.");
 		break;
 	case '9':
 		mTTS.save(ofToDataPath("savedFile.mp3"), "wellcome to openframeworks");
@@ -73,7 +72,6 @@ void testApp::keyPressed(int key){
 	case 'c':
 		mTTS.clearSoundPlayers();
 		break;
-
 	}
 }
 
