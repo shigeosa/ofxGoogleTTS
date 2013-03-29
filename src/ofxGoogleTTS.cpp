@@ -8,9 +8,23 @@ static const std::string GOOGLE_TTS_URI("http://translate.google.com/translate_t
 static const std::string MP3_FILE_PATH("tempTTSData");
 static const float DEFAULT_VOLUME(1.f);
 
+
+ofxGoogleTTS::ofxGoogleTTS()
+{
+	++mRefCount;
+}
+
 ofxGoogleTTS::~ofxGoogleTTS()
 {
 	exit();
+	--mRefCount;
+	if (mRefCount <= 0) {
+		mRefCount = 0;
+		Poco::File file(ofToDataPath(MP3_FILE_PATH));
+		if (file.exists()) {
+			file.remove(true);
+		}
+	}
 }
 
 void ofxGoogleTTS::setup( const std::string& proxyHost/*=""*/, int proxyPort/*=0*/ )
@@ -28,10 +42,6 @@ void ofxGoogleTTS::exit()
 	ofRemoveListener(mLoader.mLoadSuccess, this, &ofxGoogleTTS::loadSuccess);
 	ofRemoveListener(mLoader.mLoadFailed, this, &ofxGoogleTTS::loadFailed);
 	mLoader.clear();
-	Poco::File file(ofToDataPath(MP3_FILE_PATH));
-	if (file.exists()) {
-		file.remove(true);
-	}
 	mPlayers.clear();
 }
 
@@ -41,7 +51,8 @@ void ofxGoogleTTS::speak( const std::string& text, Language language )
 	const std::string playerName(getPlayerName(lang, text));
 
 	if (0 == mPlayers.count(playerName)) {
-		const std::string fileName(getFileName(mPlayers.size()));
+		//const std::string fileName(getFileName(mPlayers.size()));
+		const std::string fileName(getFileName(ofGetElapsedTimeMillis()));
 		mPlayers[playerName] = ofSoundPlayer();
 		mLoader.entry(mPlayers[playerName], playerName, fileName, text, language);
 		if (!mLoader.isThreadRunning()) mLoader.startThread();
@@ -69,7 +80,8 @@ bool ofxGoogleTTS::save(const std::string& fileName, const std::string& text, La
 
 bool ofxGoogleTTS::getSoundPlayer(ofSoundPlayer& player, const std::string& text, Language language/*=LANGUAGE_ENGLISH*/)
 {
-	const std::string fileName(getFileName(mPlayers.size()));
+	//const std::string fileName(getFileName(mPlayers.size()));
+	const std::string fileName(getFileName(ofGetElapsedTimeMillis()));
 	bool ret(false);
 	mLoader.lock();
 	ret = mLoader.save(ofToDataPath(fileName), text, language);
@@ -92,7 +104,7 @@ void ofxGoogleTTS::clearSoundPlayers()
 {
 	mLoader.clear();
 	mPlayers.clear();
-	createTempFolder();
+	//createTempFolder();
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -244,4 +256,6 @@ std::string ofxGoogleTTS::getLangTag( Language lang )
 	};
 	return "";
 }
+
+int ofxGoogleTTS::mRefCount=0;
 

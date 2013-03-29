@@ -30,6 +30,7 @@ public:
 		LANGUAGE_GREEK,
 		LANGUAGE_KOREAN
 	};	
+	ofxGoogleTTS();
 	~ofxGoogleTTS();
 	void setup(const std::string& proxyHost="", int proxyPort=0);
 	void exit();
@@ -88,4 +89,5 @@ private:
 	std::map<std::string, ofSoundPlayer> mPlayers;
 	float mVol;
 	ofThreadedTTSLoader mLoader;
+	static int mRefCount;
 };
