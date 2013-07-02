@@ -20,7 +20,7 @@ ofxGoogleTTS::~ofxGoogleTTS()
 	--mRefCount;
 	if (mRefCount <= 0) {
 		mRefCount = 0;
-		Poco::File file(ofToDataPath(MP3_FILE_PATH));
+		Poco::File file(ofToDataPath("tempTTSData"));
 		if (file.exists()) {
 			file.remove(true);
 		}
@@ -120,7 +120,7 @@ std::string ofxGoogleTTS::getFileName(int index) const
 
 bool ofxGoogleTTS::createTempFolder()
 {
-	Poco::File file(ofToDataPath(MP3_FILE_PATH));
+	Poco::File file(ofToDataPath("tempTTSData"));
 	if (file.exists()) {
 		file.remove(true);
 	}
