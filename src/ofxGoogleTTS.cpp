@@ -4,7 +4,7 @@
 //
 #include "ofxGoogleTTS.h"
 
-static const std::string GOOGLE_TTS_URI("http://translate.google.com/translate_tts");
+static const std::string GOOGLE_TTS_URI("http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob");
 static const std::string MP3_FILE_PATH("tempTTSData");
 static const float DEFAULT_VOLUME(1.f);
 
@@ -198,7 +198,7 @@ bool ofxGoogleTTS::ofThreadedTTSLoader::save(const std::string& fileName, const 
 {
 	Poco::URI uri(GOOGLE_TTS_URI);
 	const std::string lang(getLangTag(language));
-	std::string data(uri.getPathAndQuery() + uriEncode("?tl=" + lang + "&q=" + text));
+	std::string data(uri.getPathAndQuery() + uriEncode("&tl=" + lang + "&q=" + text));
 	
 	Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, data, Poco::Net::HTTPMessage::HTTP_1_1);
 	Poco::Net::HTTPResponse response;
